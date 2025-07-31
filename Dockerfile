@@ -3,7 +3,7 @@ FROM python:3.12-slim-bookworm
 LABEL maintainer="The Five Hundred Band"
 
 # Install requirements
-RUN pip install poetry 
+RUN pip install poetry
 
 COPY ./pyproject.toml ./poetry.lock* /tmp/
 
