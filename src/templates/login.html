@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>Iniciar Sesión</h2>
+        <h2>Login</h2>
 
         {% if form.errors %}
             <ul class="errorlist">
@@ -41,20 +41,19 @@
         {% endif %}
 
         <form method="post">
-            {% csrf_token %} {# ¡Importante para seguridad! #}
+            {% csrf_token %}
 
             <p>
-                <label for="{{ form.username.id_for_label }}">Usuario:</label>
+                <label for="{{ form.username.id_for_label }}">Username:</label>
                 {{ form.username }}
             </p>
             <p>
-                <label for="{{ form.password.id_for_label }}">Contraseña:</label>
+                <label for="{{ form.password.id_for_label }}">Password:</label>
                 {{ form.password }}
             </p>
 
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit">Login</button>
 
-            {# Puedes añadir un enlace para registrarse o restablecer contraseña aquí #}
             <input type="hidden" name="next" value="{{ next }}" />
         </form>
     </div>

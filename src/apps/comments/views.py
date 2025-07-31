@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView
@@ -7,7 +8,7 @@ from videos.models import Video
 
 
 # Create your views here.
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, CreateView):
      model = Comment
      form_class = CreateCommentForm
      template_name = 'detail_video.html'

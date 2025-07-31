@@ -1,7 +1,8 @@
-from django.urls import reverse
 from loguru import logger
 
 from django.contrib.auth.models import User
+from django.views.generic import DetailView
+
 from django.shortcuts import redirect, render
 
 from accounts.models import Account
@@ -12,9 +13,10 @@ def register_view(request):
           try:
                username = request.POST.get('username')
                email = request.POST.get('email')
-               ##TODO: Hash password
                password = request.POST.get('password')
-               user = User(username=username, email=email, password=password)
+
+               user = User(username=username, email=email)
+               user.set_password(password)
                user.save()
 
                account = Account(user=user)
@@ -28,23 +30,10 @@ def register_view(request):
     return render(request=request, template_name='register_account.html')
 
 
+class AccountDetailView(DetailView):
+     model = Account
+     template_name = 'account.html'
+     context_object_name = 'account'
 
-# # Create your views here.
-# def login_view(request):
-#     if request.method == 'POST':
-#           try:
-#                email = request.POST.get('email')
-#                ##TODO: Hash password
-#                password = request.POST.get('password')
-
-#                user = User.objects.get(email=email)
-#                if user.password == password:
-#                     return render(request=request, template_name='account.html')
-#                else:
-#                     ##TODO: Handle Error
-#                     return render(request=request, template_name='login.html')
-#           except Exception as e:
-#                logger.info(f"Error while creating user {e}")
-#                return
-
-#     return render(request=request, template_name='login.html')
+     # def get_queryset(self):
+     #    return self.model.objects.filter(user=self.request.user)

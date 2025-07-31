@@ -1,5 +1,5 @@
 import datetime
-from django import forms
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView
@@ -23,13 +23,19 @@ class VideoCreateView(CreateView):
           return reverse('video_detail', kwargs={'pk': self.object.pk})
 
 
-class VideoListView(ListView):
+class VideoHomeListView(ListView):
      model = Video
      context_object_name = 'videos'
      template_name = 'home.html'
 
      def get_queryset(self):
         return self.model.objects.order_by('?')
+
+
+class VideoListView(ListView):
+     model = Video
+     context_object_name = 'videos'
+     template_name = 'home.html'
 
 
 class VideoDetailView(DetailView):
@@ -47,21 +53,24 @@ class VideoDetailView(DetailView):
           return context
 
 
-
+@login_required
 def video_reaction_view(request, pk):
      user = request.user
      video = Video.objects.get(pk=pk)
 
-     reaction = Reaction(user=user, video=video)
-
      reaction_type = request.POST.get('reaction_type')
+     reaction_positive = True if reaction_type == "like" else False
 
-     if reaction_type == "like":
-          reaction.positive = True
-     else:
-          reaction.positive = False
+     reaction, created = Reaction.objects.get_or_create(
+          user=user,
+          video=video,
+          defaults={'positive': reaction_positive}
+     )
 
-     reaction.save()
+     if not created:
+          reaction.positive = reaction_positive
+          reaction.save()
+
      return redirect('video_detail', pk=pk)
 
 
@@ -82,17 +91,3 @@ def video_reaction_view(request, pk):
 #           number_dislikes = video.reactions.filter(positive=False)
 
 #           video_score += number_comments + number_likes + number_dislikes
-
-          # if len(most_popular_videos_score) < NUMBER_MOST_POPULAR_VIDEOS:
-          #      most_popular_videos_score.append(video_score)
-          #      most_popular_videos.append(video)
-          # else:
-          #      for i in range(most_popular_videos_score):
-          #           less_popular = i
-          #           if video_score > most_popular_videos_score[i]:
-          #                less_popular = i
-          #                most_popular_videos_score[0] = video_score
-          #                most_popular_videos[0] = video_score
-
-
-          # most_popular_videos_score.sort()

@@ -4,5 +4,5 @@ from histories.views import HistoryListView
 
 
 urlpatterns = [
-     path('', HistoryListView.as_view(), name='history_list')
+     path('', HistoryListView.as_view(), name='history')
 ]

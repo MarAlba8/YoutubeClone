@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 
 <html>
-     <h3>Hola</h3>
-     <form action="{% url 'logout' %}" method="post" style="display: inline;"> {# display: inline; para que no rompa el layout si va en una barra #}
-          {% csrf_token %} {# ¡CRUCIAL! Asegura que la solicitud POST sea segura #}
-          <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; padding: 0; font: inherit;">
-               Log out
-          </button>
-     </form>
+     <h3>Welcome {{ account.user }}</h3>
+     {% if account.user.uploaded_videos %}
+          {% for video in account.user.uploaded_videos.all %}
+               <li>{{ video.title }}</li>
+               <li>{{ video.embed_url | safe}}</li>
+          {% endfor %}
+     {% else %}
+          <h3>No videos Published</h3>
+     {% endif %}
+
+     <div>
+          <a href="{% url 'video_create' %}" class="btn btn-outline-light nav-link">
+               Create Video
+          </a>
+     </div>
+     <div>
+          <a href="{% url 'history' %}" class="btn btn-outline-light nav-link">
+               History
+          </a>
+     </div>
 </html>
