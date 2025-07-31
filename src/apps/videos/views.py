@@ -12,7 +12,7 @@ from reactions.models import Reaction
 
 class VideoCreateView(CreateView):
      model = Video
-     template_name = 'create_video.html'
+     template_name = 'video/create_video.html'
      form_class = CreateVideoForm
 
      def form_valid(self, form):
@@ -40,7 +40,7 @@ class VideoListView(ListView):
 
 class VideoDetailView(DetailView):
      model = Video
-     template_name = 'detail_video.html'
+     template_name = 'video/detail_video.html'
 
      def get_context_data(self, **kwargs):
           context = super().get_context_data(**kwargs)

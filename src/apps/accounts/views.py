@@ -32,7 +32,7 @@ def register_view(request):
 
 class AccountDetailView(DetailView):
      model = Account
-     template_name = 'account.html'
+     template_name = 'account/account.html'
      context_object_name = 'account'
 
      # def get_queryset(self):
