@@ -27,13 +27,10 @@ def register_view(request):
                logger.error(f"Error while creating user {e}")
                return redirect('register')
 
-    return render(request=request, template_name='register_account.html')
+    return render(request=request, template_name='account/register_account.html')
 
 
 class AccountDetailView(DetailView):
      model = Account
      template_name = 'account/account.html'
      context_object_name = 'account'
-
-     # def get_queryset(self):
-     #    return self.model.objects.filter(user=self.request.user)

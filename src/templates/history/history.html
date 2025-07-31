@@ -1,7 +1,44 @@
 <!DOCTYPE html>
-<html>
-     {%for item in history %}
-          <h3>{{ item.video.title }}</h3>
-          {{ item.video.embed_url | safe }}
-     {% endfor %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video History</title>
+    <!-- Load Tailwind CSS CDN for quick and modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define Inter font for the entire body */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl mt-8">
+        <h3 class="text-3xl font-bold text-gray-800 mb-6 text-center">Your Viewing History</h3>
+
+        {% if history %}
+            <ul class="space-y-4">
+                {% for item in history %}
+                    <li class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-lg font-medium text-indigo-600 mb-2">{{ item.video.title }}</h4>
+                        <div class="mt-2 text-gray-600">
+                            {# Ensure embed_url is safe to render HTML/iframes #}
+                            {{ item.video.embed_url | safe }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3 class="text-xl font-semibold text-gray-700 text-center mt-8">No viewing history found.</h3>
+        {% endif %}
+
+         <div class="mt-8 text-center">
+            <a href="{% url 'account' pk=user.account.id %}"
+               class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
 </html>
