@@ -1,0 +1,20 @@
+[project]
+name = "youtubecloneii"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Maru812",email = "driadesm8@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "django (>=5.2.4,<6.0.0)",
+    "python-environ (>=0.4.54,<0.5.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+    "loguru (>=0.7.3,<0.8.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

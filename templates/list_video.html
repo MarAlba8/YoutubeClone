@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html>
+     {%for video in videos%}
+          <h3>{{ video.title }}</h3>
+          {{ video.embed_url | safe }}
+     {% endfor %}
+</html>

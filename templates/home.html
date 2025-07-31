@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+     <h1>Welcome</h1>
+
+     <h3>Videos</h3>
+
+     {%for video in videos%}
+          <div>
+               <h2>
+                    <a href="{% url 'video_detail' pk=video.pk %}">
+                    {{ video.title }}
+                    </a>
+               </h2>
+          {{ video.embed_url | safe }}
+          </div>
+     {% endfor %}
+
+     <div style="margin-left: auto;"> {# Opcional: para empujar los botones a la derecha en una barra de navegación #}
+          {% if user.is_authenticated %}
+               <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; padding: 0; font: inherit;">
+                    Cerrar Sesión ({{ user.username }})
+                    </button>
+               </form>
+          {% else %}
+               <a href="{% url 'login' %}" style="margin-right: 10px;">Iniciar Sesión</a>
+               <a href="{% url 'register' %}">Registrarse</a> {# ¡Asumiendo que tienes una URL 'register'! #}
+          {% endif %}
+     </div>
+
+<style>
+    /* Estilos básicos para la demostración */
+    nav {
+        display: flex;
+        align-items: center;
+        background-color: #333;
+        padding: 10px 20px;
+        color: white;
+    }
+    nav a, nav button {
+        color: white;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+    nav a:hover, nav button:hover {
+        background-color: #555;
+    }
+</style>
+</html>
