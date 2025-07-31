@@ -1,0 +1,25 @@
+ services:
+  postgres:
+    container_name: "db"
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: youtb_clone
+    ports:
+      - 5430:5432
+
+  app:
+    container_name: "youtb_clone_app"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./src/config/.env
+    environment:
+      DATABASE_URL: postgresql://postgres:mysecretpassword@postgres:5432/youtb_clone
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres

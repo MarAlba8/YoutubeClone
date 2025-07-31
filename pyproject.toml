@@ -1,9 +1,9 @@
 [project]
-name = "youtubecloneii"
+name = "youtube_clone"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Maru812",email = "driadesm8@gmail.com"}
+    {name = "Maru812",email = "maruar812@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.11,<4.0"
